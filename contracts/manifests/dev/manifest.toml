@@ -1,0 +1,50 @@
+[world]
+kind = "WorldContract"
+class_hash = "0x3f63cecdc4964acafb921ba2934c6507d1b3c344edb64c2762cf08053169ab9"
+original_class_hash = "0x3f63cecdc4964acafb921ba2934c6507d1b3c344edb64c2762cf08053169ab9"
+abi = "manifests/dev/abis/deployments/dojo_world_world.json"
+address = "0x399910daf5a434354e70c5e460ab7a58465fe1537ea54bd139df333e50485c2"
+transaction_hash = "0x7c2a71f21e59514d680b1f4f809a0d2ba429a8b2c781e2268d4061d370c8113"
+block_number = 3
+seed = "renamer"
+name = "dojo::world::world"
+
+[world.metadata]
+profile_name = "dev"
+rpc_url = "http://localhost:5050/"
+
+[base]
+kind = "Class"
+class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
+original_class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
+name = "dojo::base::base"
+
+[[contracts]]
+kind = "DojoContract"
+address = "0x2e82284867d287e510a18a2e2c26de11bfc905ba684936e4242f40226fa3c37"
+class_hash = "0xffe6f18132208f312c4045a63d6b3ed5b5284a8e8d6c73c8e2ab0eb2e6cae6"
+original_class_hash = "0xffe6f18132208f312c4045a63d6b3ed5b5284a8e8d6c73c8e2ab0eb2e6cae6"
+base_class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
+abi = "manifests/dev/abis/deployments/contracts/renamer_systems_actions_actions.json"
+reads = []
+writes = ["Player"]
+computed = []
+init_calldata = []
+name = "renamer::systems::actions::actions"
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x7e288b2545c36cc1306b5da6472e6030b7fe22db72fbef87fda4fbe50a33df1"
+original_class_hash = "0x7e288b2545c36cc1306b5da6472e6030b7fe22db72fbef87fda4fbe50a33df1"
+abi = "manifests/dev/abis/deployments/models/renamer_models_index_player.json"
+name = "renamer::models::index::player"
+
+[[models.members]]
+name = "id"
+type = "felt252"
+key = true
+
+[[models.members]]
+name = "name"
+type = "felt252"
+key = false
