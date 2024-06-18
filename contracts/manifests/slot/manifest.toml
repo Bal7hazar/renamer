@@ -1,0 +1,50 @@
+[world]
+kind = "WorldContract"
+class_hash = "0x3f63cecdc4964acafb921ba2934c6507d1b3c344edb64c2762cf08053169ab9"
+original_class_hash = "0x3f63cecdc4964acafb921ba2934c6507d1b3c344edb64c2762cf08053169ab9"
+abi = "manifests/slot/abis/deployments/dojo_world_world.json"
+address = "0x490357d9f9b54b6564dcc9d8315dec85fac175a83a1f75409b820f4a6ae893b"
+transaction_hash = "0x77e8008271d1c94da2ab6c8c1452227072f90d21afc21053839ac87017426fa"
+block_number = 3
+seed = "renamer-v0"
+name = "dojo::world::world"
+
+[world.metadata]
+profile_name = "slot"
+rpc_url = "https://api.cartridge.gg/x/renamer/katana"
+
+[base]
+kind = "Class"
+class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
+original_class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
+name = "dojo::base::base"
+
+[[contracts]]
+kind = "DojoContract"
+address = "0x4c8b6a1f6ea280bc3244d38113ce4f4a0b1b10f2a0f45fa3c4a58ab20e6d179"
+class_hash = "0xffe6f18132208f312c4045a63d6b3ed5b5284a8e8d6c73c8e2ab0eb2e6cae6"
+original_class_hash = "0xffe6f18132208f312c4045a63d6b3ed5b5284a8e8d6c73c8e2ab0eb2e6cae6"
+base_class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
+abi = "manifests/slot/abis/deployments/contracts/renamer_systems_actions_actions.json"
+reads = []
+writes = ["Player"]
+computed = []
+init_calldata = []
+name = "renamer::systems::actions::actions"
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x7e288b2545c36cc1306b5da6472e6030b7fe22db72fbef87fda4fbe50a33df1"
+original_class_hash = "0x7e288b2545c36cc1306b5da6472e6030b7fe22db72fbef87fda4fbe50a33df1"
+abi = "manifests/slot/abis/deployments/models/renamer_models_index_player.json"
+name = "renamer::models::index::player"
+
+[[models.members]]
+name = "id"
+type = "felt252"
+key = true
+
+[[models.members]]
+name = "name"
+type = "felt252"
+key = false
