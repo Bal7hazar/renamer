@@ -1,6 +1,6 @@
 kind = "DojoContract"
-class_hash = "0xffe6f18132208f312c4045a63d6b3ed5b5284a8e8d6c73c8e2ab0eb2e6cae6"
-original_class_hash = "0xffe6f18132208f312c4045a63d6b3ed5b5284a8e8d6c73c8e2ab0eb2e6cae6"
+class_hash = "0x39725b1db5c7c5df50f569c5bb08973454a3236d5aad360324adb1c898dffd3"
+original_class_hash = "0x39725b1db5c7c5df50f569c5bb08973454a3236d5aad360324adb1c898dffd3"
 base_class_hash = "0x0"
 abi = "manifests/dev/abis/base/contracts/renamer_systems_actions_actions.json"
 reads = []

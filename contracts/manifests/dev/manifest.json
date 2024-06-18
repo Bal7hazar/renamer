@@ -1020,8 +1020,8 @@
     {
       "kind": "DojoContract",
       "address": "0x2e82284867d287e510a18a2e2c26de11bfc905ba684936e4242f40226fa3c37",
-      "class_hash": "0xffe6f18132208f312c4045a63d6b3ed5b5284a8e8d6c73c8e2ab0eb2e6cae6",
-      "original_class_hash": "0xffe6f18132208f312c4045a63d6b3ed5b5284a8e8d6c73c8e2ab0eb2e6cae6",
+      "class_hash": "0x39725b1db5c7c5df50f569c5bb08973454a3236d5aad360324adb1c898dffd3",
+      "original_class_hash": "0x39725b1db5c7c5df50f569c5bb08973454a3236d5aad360324adb1c898dffd3",
       "base_class_hash": "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46",
       "abi": [
         {
@@ -1048,8 +1048,8 @@
         },
         {
           "type": "impl",
-          "name": "ActionsImpl",
-          "interface_name": "renamer::systems::actions::IActions"
+          "name": "WorldProviderImpl",
+          "interface_name": "dojo::world::IWorldProvider"
         },
         {
           "type": "struct",
@@ -1060,49 +1060,6 @@
               "type": "core::starknet::contract_address::ContractAddress"
             }
           ]
-        },
-        {
-          "type": "interface",
-          "name": "renamer::systems::actions::IActions",
-          "items": [
-            {
-              "type": "function",
-              "name": "create",
-              "inputs": [
-                {
-                  "name": "world",
-                  "type": "dojo::world::IWorldDispatcher"
-                },
-                {
-                  "name": "name",
-                  "type": "core::felt252"
-                }
-              ],
-              "outputs": [],
-              "state_mutability": "view"
-            },
-            {
-              "type": "function",
-              "name": "rename",
-              "inputs": [
-                {
-                  "name": "world",
-                  "type": "dojo::world::IWorldDispatcher"
-                },
-                {
-                  "name": "name",
-                  "type": "core::felt252"
-                }
-              ],
-              "outputs": [],
-              "state_mutability": "view"
-            }
-          ]
-        },
-        {
-          "type": "impl",
-          "name": "WorldProviderImpl",
-          "interface_name": "dojo::world::IWorldProvider"
         },
         {
           "type": "interface",
@@ -1123,17 +1080,75 @@
         },
         {
           "type": "impl",
-          "name": "DojoInitImpl",
-          "interface_name": "renamer::components::initializable::IDojoInit"
+          "name": "ActionsImpl",
+          "interface_name": "renamer::systems::actions::IActions"
         },
         {
           "type": "interface",
-          "name": "renamer::components::initializable::IDojoInit",
+          "name": "renamer::systems::actions::IActions",
+          "items": [
+            {
+              "type": "function",
+              "name": "create",
+              "inputs": [
+                {
+                  "name": "name",
+                  "type": "core::felt252"
+                }
+              ],
+              "outputs": [],
+              "state_mutability": "external"
+            },
+            {
+              "type": "function",
+              "name": "rename",
+              "inputs": [
+                {
+                  "name": "name",
+                  "type": "core::felt252"
+                }
+              ],
+              "outputs": [],
+              "state_mutability": "external"
+            }
+          ]
+        },
+        {
+          "type": "impl",
+          "name": "IDojoInitImpl",
+          "interface_name": "renamer::systems::actions::actions::IDojoInit"
+        },
+        {
+          "type": "interface",
+          "name": "renamer::systems::actions::actions::IDojoInit",
           "items": [
             {
               "type": "function",
               "name": "dojo_init",
               "inputs": [],
+              "outputs": [],
+              "state_mutability": "view"
+            }
+          ]
+        },
+        {
+          "type": "impl",
+          "name": "UpgradableImpl",
+          "interface_name": "dojo::components::upgradeable::IUpgradeable"
+        },
+        {
+          "type": "interface",
+          "name": "dojo::components::upgradeable::IUpgradeable",
+          "items": [
+            {
+              "type": "function",
+              "name": "upgrade",
+              "inputs": [
+                {
+                  "name": "new_class_hash",
+                  "type": "core::starknet::class_hash::ClassHash"
+                }
+              ],
               "outputs": [],
               "state_mutability": "external"
             }
@@ -1141,15 +1156,27 @@
         },
         {
           "type": "event",
-          "name": "renamer::components::initializable::InitializableComponent::Event",
-          "kind": "enum",
-          "variants": []
+          "name": "dojo::components::upgradeable::upgradeable::Upgraded",
+          "kind": "struct",
+          "members": [
+            {
+              "name": "class_hash",
+              "type": "core::starknet::class_hash::ClassHash",
+              "kind": "data"
+            }
+          ]
         },
         {
           "type": "event",
-          "name": "renamer::components::manageable::ManageableComponent::Event",
+          "name": "dojo::components::upgradeable::upgradeable::Event",
           "kind": "enum",
-          "variants": []
+          "variants": [
+            {
+              "name": "Upgraded",
+              "type": "dojo::components::upgradeable::upgradeable::Upgraded",
+              "kind": "nested"
+            }
+          ]
         },
         {
           "type": "event",
@@ -1157,14 +1184,9 @@
           "kind": "enum",
           "variants": [
             {
-              "name": "InitializableEvent",
-              "type": "renamer::components::initializable::InitializableComponent::Event",
-              "kind": "flat"
-            },
-            {
-              "name": "ManageableEvent",
-              "type": "renamer::components::manageable::ManageableComponent::Event",
-              "kind": "flat"
+              "name": "UpgradeableEvent",
+              "type": "dojo::components::upgradeable::upgradeable::Event",
+              "kind": "nested"
             }
           ]
         }

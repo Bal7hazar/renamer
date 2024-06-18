@@ -1,88 +1,59 @@
-// Starknet imports
-
-use starknet::ContractAddress;
-
-// Dojo imports
-
-use dojo::world::IWorldDispatcher;
-
 // Interfaces
 
-#[starknet::interface]
-trait IActions<TContractState> {
-    fn create(self: @TContractState, world: IWorldDispatcher, name: felt252);
-    fn rename(self: @TContractState, world: IWorldDispatcher, name: felt252);
+#[dojo::interface]
+trait IActions {
+    fn create(ref world: IWorldDispatcher, name: felt252);
+    fn rename(ref world: IWorldDispatcher, name: felt252);
 }
 
 // Contracts
 
-#[starknet::contract]
+#[dojo::contract]
 mod actions {
-    // Dojo imports
+    // Starknet imports
 
-    use dojo::world;
-    use dojo::world::IWorldDispatcher;
-    use dojo::world::IWorldDispatcherTrait;
-    use dojo::world::IDojoResourceProvider;
+    use renamer::models::player::AssertTrait;
+    use starknet::info::get_caller_address;
 
-    // Component imports
+    // Internal imports
 
-    use renamer::components::initializable::InitializableComponent;
-    use renamer::components::manageable::ManageableComponent;
+    use renamer::store::{Store, StoreImpl};
+    use renamer::models::player::{Player, PlayerTrait, PlayerAssert};
 
     // Local imports
 
     use super::IActions;
 
-    // Components
-
-    component!(path: InitializableComponent, storage: initializable, event: InitializableEvent);
-    #[abi(embed_v0)]
-    impl WorldProviderImpl =
-        InitializableComponent::WorldProviderImpl<ContractState>;
-    #[abi(embed_v0)]
-    impl DojoInitImpl = InitializableComponent::DojoInitImpl<ContractState>;
-    component!(path: ManageableComponent, storage: manageable, event: ManageableEvent);
-    impl ManageableInternalImpl = ManageableComponent::InternalImpl<ContractState>;
-
-    // Storage
-
-    #[storage]
-    struct Storage {
-        #[substorage(v0)]
-        initializable: InitializableComponent::Storage,
-        #[substorage(v0)]
-        manageable: ManageableComponent::Storage,
-    }
-
-    // Events
-
-    #[event]
-    #[derive(Drop, starknet::Event)]
-    enum Event {
-        #[flat]
-        InitializableEvent: InitializableComponent::Event,
-        #[flat]
-        ManageableEvent: ManageableComponent::Event,
-    }
-
     // Implementations
 
     #[abi(embed_v0)]
-    impl DojoResourceProviderImpl of IDojoResourceProvider<ContractState> {
-        fn dojo_resource(self: @ContractState) -> felt252 {
-            'actions'
-        }
-    }
-
-    #[abi(embed_v0)]
     impl ActionsImpl of IActions<ContractState> {
-        fn create(self: @ContractState, world: IWorldDispatcher, name: felt252) {
-            self.manageable._create(world, name);
+        fn create(ref world: IWorldDispatcher, name: felt252,) {
+            // [Setup] Datastore
+            let store: Store = StoreImpl::new(world);
+
+            // [Check] Player not already exists
+            let caller = get_caller_address();
+            let player = store.player(caller.into());
+            player.assert_not_exists();
+
+            // [Effect] Create a new player
+            let player = PlayerTrait::new(caller.into(), name);
+            store.set_player(player);
         }
 
-        fn rename(self: @ContractState, world: IWorldDispatcher, name: felt252) {
-            self.manageable._rename(world, name);
+        fn rename(ref world: IWorldDispatcher, name: felt252,) {
+            // [Setup] Datastore
+            let store: Store = StoreImpl::new(world);
+
+            // [Check] Player exists
+            let caller = get_caller_address();
+            let mut player = store.player(caller.into());
+            player.assert_exists();
+
+            // [Effect] Update player
+            player.rename(name);
+            store.set_player(player);
         }
     }
 }

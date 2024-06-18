@@ -75,7 +75,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "create",
-            calldata: [provider.getWorldAddress(), encoded_name],
+            calldata: [encoded_name],
           },
           details,
         );
@@ -93,7 +93,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "rename",
-            calldata: [provider.getWorldAddress(), encoded_name],
+            calldata: [encoded_name],
           },
           details,
         );

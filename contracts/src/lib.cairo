@@ -5,10 +5,10 @@ mod models {
     mod player;
 }
 
-mod components {
-    mod initializable;
-    mod manageable;
-}
+// mod components {
+//     mod initializable;
+//     mod manageable;
+// }
 
 mod systems {
     mod actions;
